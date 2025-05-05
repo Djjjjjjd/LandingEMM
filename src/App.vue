@@ -1,88 +1,156 @@
 <script setup>
-import { ref } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
 
-const currentTab = ref('home')
 
-const setTab = (tab) => {
-  currentTab.value = tab
-  const target = document.getElementById(tab)
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth' })
-  }
-}
+const items = [
+  {
+    id: 1,
+    image: '/image/img_1.jpg',
+    title: 'Работа 1',
+    description: 'Описание первой работы',
+  },
+  {
+    id: 2,
+    image: '/image/img_2.jpg',
+    title: 'Работа 2',
+    description: 'Описание второй работы',
+  },
+  {
+    id: 3,
+    image: '/image/img_3.jpg',
+    title: 'Работа 3',
+    description: 'Описание третьей работы',
+  },
+]
 </script>
-
 <template>
-  <header class="">
-    <div class="container nav">
-      <div class="">
-        <a href="/" class="header-logo">DCS</a>
-      </div>
-      <div class="nav-block">
-        <ul class="nav-link">
-          <li class="hn-link">
-            <a href="#home" class="link">Главная</a>
+  <!-- header -->
+   <header>
+    <div class="container header">
+      <!-- logo -->
+       <div class="logo">
+        <a href="">
+          dcs
+        </a>
+       </div>
+       <nav class="">
+        <ul class="nav-links">
+          <li class="nav-link">
+            <a href="" >главная</a>
           </li>
-          <li class="hn-link">
-            <a href="#work" class="link">Наши работы</a>
+          <li class="nav-link">
+            <a href="" >Наши работы</a>
           </li>
-          <li class="hn-link">
-            <a href="#contact" class="link">Контакт</a>
+          <li class="nav-link">
+            <a href="">контакт</a>
           </li>
         </ul>
+      </nav>
       </div>
-    </div>
-  </header>
-  <main class="main">
-    <section id="home">
-      <!-- heroSection -->
+   </header>
+   <main>
+    <!-- hero -->
+    <section class="container section">
       <div class="hero">
         <!-- text -->
-        <div class="hero-text">
-          <h1 class="h1">
-            don <br> city <br> stroy <br>
+        <div class="hero-title">
+          <h1 class="">
+            Don<br>
+            city<br>
+            stroy
           </h1>
         </div>
         <!-- image -->
         <div class="hero-image">
-          <img src="/image/heroimage.png" alt="hero image">
+          <img src="/image/heroimage.png" alt="heroImg">
         </div>
       </div>
-      <!-- item -->
-       <div class="home_item">
+      <!-- card -->
+      <div class="card">
         <!-- image -->
-        <div class="item-image">
-          <img src="/image/photo.png" alt="photo">
+        <div class="card-img">
+          <img src="/image/photo.png" alt="itesmImg">
         </div>
-        <!-- text + buttons-->
-         <div class="item-info">
-          <!-- TEXT -->
-            <div class="item-info_text">
-              <h3 class="">Эммануил Таможников</h3>
-              <p class="subTitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, assumenda. </p>
-            </div>
-            <!-- BUTTONS -->
-            <div class="item-info_btn">
-              <a href="tel:+79497560061" class="phone">
-                <i class="fas fa-phone"></i>
+        <div class="card-text_btn">
+          <!-- text -->
+           <div class="card-text">
+            <h3 class="">Эммануил Таможников</h3>
+            <p class="">краткое описание</p>
+           </div>
+           <!-- buttons -->
+            <div class="card_buttons">
+              <a href="tel:+79496188568" class="item-button phone">
+                <i class="fa-solid fa-phone"></i>
               </a>
-              <a type="mail" href="https://t.me/emmanuil_tamozhnikov" class="mail">
-                <i class="fa-solid fa-paper-plane"></i>
+              <a href="sms:+79496188568" class="item-button envelope">
+                <i class="fa-solid fa-envelope"></i>
               </a>
             </div>
-         </div>
-       </div>
+        </div>
+      </div>
     </section>
-    <section id="work">
+    <!-- about us -->
+    <section class="container">
       <div class="work">
         <!-- text -->
-         <div class="">
-          <h2>Фото<br>Наших<br>работ</h2>
-         </div>
+         <div class="work-title">
+          <h3>фото<br>наших<br>работ</h3>
+          <div class="slider-container">
+            <Swiper
+              :slides-per-view="1"
+              :space-between="5"
+              :breakpoints="{
+                640: { slidesPerView: 2 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+              }"
+              class="mySwiper"
+            >
+              <SwiperSlide v-for="item in items" :key="item.id">
+                <div class="work-item">
+                  <img :src="item.image" :alt="item.title" />
+                </div>
+              </SwiperSlide>
+            </Swiper>
+          </div>
+        </div>
+        <!-- about us -->
+        <div class="about">
+          <div class="about-title">
+            <h3>о нас</h3>
+            <p>Уже более 5 лет наша компания оказывает услуги в сфере строительства и ремонта «ПОД КЛЮЧ» по всей территории ДНР и ЛНР. Мы считаем себя лучшими в этой сфере!</p>
+            <p>Беремся за проекты любой сложности и работаем БЕЗ ВЫХОДНЫХ!</p>
+            <p>Осуществляем выезд на замер, составление сметы - БЕСПЛАТНО!</p>
+          </div>
+        </div>
       </div>
     </section>
-    <section id="contact"></section>
   </main>
+  <!-- footer -->
+   <footer class="footer">
+    <div class="container">
+      <!-- text -->
+      <div class="contact">
+        <h4>Контакты</h4>
+        <!-- phone -->
+         <div class="footerTel">
+           <p>тел:</p>
+           <a href="" class="">+7(949)564-19-22</a><br>
+           <a href="" class="">+7(949)564-19-22</a><br>
+           <a href="" class="">+7(949)564-19-22</a>
+         </div>
+         <div class="teleg">
+           <p>telegram:</p>
+           <a href="">@tamozhnikova</a>
+         </div>
+      </div>
+      <!-- map -->
+       <div class="map">
+        <a href="" class=""></a>
+       </div>
+    </div>
+   </footer>
 </template>
 
 <style scoped>
