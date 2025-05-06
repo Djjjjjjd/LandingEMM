@@ -23,6 +23,15 @@ const items = [
     description: 'Описание третьей работы',
   },
 ]
+
+document.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  document.querySelectorAll('.parallax-element').forEach((el) => {
+    const speed = el.getAttribute('data-speed');
+    el.style.transform = `translateY(${scrolled * speed}px)`;
+  });
+});
+
 </script>
 <template>
   <!-- header -->
@@ -37,13 +46,13 @@ const items = [
        <nav class="">
         <ul class="nav-links">
           <li class="nav-link">
-            <a href="" >главная</a>
+            <a href="#home" >главная</a>
           </li>
           <li class="nav-link">
-            <a href="" >Наши работы</a>
+            <a href="#work" >Наши работы</a>
           </li>
           <li class="nav-link">
-            <a href="">контакт</a>
+            <a href="#footer">контакт</a>
           </li>
         </ul>
       </nav>
@@ -51,23 +60,23 @@ const items = [
    </header>
    <main>
     <!-- hero -->
-    <section class="container section">
-      <div class="hero">
+    <section class="container section" id="home">
+      <div class="hero parallax-element" data-speed="0.04">
         <!-- text -->
-        <div class="hero-title">
+        <div class="hero-title" >
           <h1 class="">
             Don<br>
             city<br>
             stroy
           </h1>
         </div>
-        <!-- image -->
-        <div class="hero-image">
+        <!-- image -->  
+        <div class="hero-image ">
           <img src="/image/heroimage.png" alt="heroImg">
         </div>
       </div>
       <!-- card -->
-      <div class="card">
+      <div class="card" >
         <!-- image -->
         <div class="card-img">
           <img src="/image/photo.png" alt="itesmImg">
@@ -91,12 +100,15 @@ const items = [
       </div>
     </section>
     <!-- about us -->
-    <section class="container">
+    <section class="container" id="work">
       <div class="work">
         <!-- text -->
          <div class="work-title">
-          <h3>фото<br>наших<br>работ</h3>
-          <div class="slider-container">
+          <div class="work-text">
+            <h3>фото<br>наших<br>работ</h3>
+            <img src="/image/deelop.png" alt="detroy" class="work-deelop">
+          </div>
+          <div class="slider-container parallax-element" data-speed="0.03">
             <Swiper
               :slides-per-view="1"
               :space-between="5"
@@ -109,7 +121,7 @@ const items = [
             >
               <SwiperSlide v-for="item in items" :key="item.id">
                 <div class="work-item">
-                  <img :src="item.image" :alt="item.title" />
+                  <img :src="item.image" :alt="item.title" class="slider-img"/>
                 </div>
               </SwiperSlide>
             </Swiper>
@@ -128,26 +140,27 @@ const items = [
     </section>
   </main>
   <!-- footer -->
-   <footer class="footer">
-    <div class="container">
+   <footer class="footer" id="footer">
+    <div class="container footer-contact">
       <!-- text -->
       <div class="contact">
         <h4>Контакты</h4>
         <!-- phone -->
          <div class="footerTel">
            <p>тел:</p>
-           <a href="" class="">+7(949)564-19-22</a><br>
-           <a href="" class="">+7(949)564-19-22</a><br>
-           <a href="" class="">+7(949)564-19-22</a>
+           <a href="tel:+79495641922" class="">+7(949)564-19-22</a>
+           <a href="tel:+79496188568" class="">+7(949)618-85-68</a>
+           <a href="tel:+79497082622" class="">+7(949)708-26-22</a>
          </div>
          <div class="teleg">
            <p>telegram:</p>
-           <a href="">@tamozhnikova</a>
+           <a href="https://t.me/anna_tamozhnikova">@tamozhnikova</a>
          </div>
       </div>
       <!-- map -->
        <div class="map">
-        <a href="" class=""></a>
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=37.761190%2C47.988848&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNDQ0NTM0NTUwEhrQoNC-0YHRltGPLCDQlNC-0L3QtdGG0YzQuiIKDR42F0IVRBBAQg%2C%2C&z=11.74" width="100%" height="100%" frameborder="0" loading="lazy" class="map-footer">
+        </iframe>
        </div>
     </div>
    </footer>
