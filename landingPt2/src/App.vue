@@ -1,25 +1,42 @@
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
+import { onMounted, onUnmounted } from 'vue'
+
+function parallaxScroll() {
+  const cards = document.querySelectorAll('.paralax')
+  cards.forEach((card, i) => {
+    // Чем больше i, тем меньше скорость (эффект глубины)
+    const speed = 0.03 + i * 0.05
+    card.style.transform = `translateY(${window.scrollY * speed}px)`
+  })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', parallaxScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', parallaxScroll)
+})
 </script>
 
 <template>
-  <header class="relative">
+  <header class="relative flex flex-col items-center">
     <!-- opening -->
-    <div class="bg-zinc-200">
+    <div class="bg-zinc-200 min-w-[100%]">
       <div class="container mx-auto p-3">
         <div class="flex text-blue-950">
           <p>Окрыто с 08:00 до 21:00</p>
           <div class="ml-auto flex gap-3 text-blue-950 ">
-            <a href=""><i class="fab fa-vk"></i></a>
-            <a href=""><i class="fab fa-facebook"></i></a>
-            <a href=""><i class="fab fa-instagram"></i></a>
-            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href="https://vk.com/feed"><i class="fab fa-vk"></i></a>
+            <a href="https://www.facebook.com/?locale=ru_RU"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
           </div>
         </div>
       </div>
     </div>
-    <div class="bg-white pb-[50px]">
+    <!-- dns block -->
+    <div class="bg-white pb-[50px] min-w-[100%]">
       <div class="container mx-auto p-5 flex">
         <div class="ml-right text-5xl font-bold text-blue-950">
           <a href="/">
@@ -35,7 +52,7 @@ import 'swiper/swiper-bundle.css';
             </div>
             <div class="flex flex-col text-zinc-700">
               <p>Напиши нам</p>
-              <a href="">Info@bluecollar.com</a>
+              <a href="mail:">Info@bluecollar.com</a>
             </div>
           </div>
           <div class="flex gap-3 items-center hover:scale-[102%] transition-all">
@@ -45,28 +62,29 @@ import 'swiper/swiper-bundle.css';
             </div>
             <div class="flex flex-col text-zinc-700">
               <p>Позвони нам</p>
-              <a href="">+7949 000 00</a>
+              <a href="tel:79495641922">+7(949)564-19-22</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="container absolute right-[10%] top-[150px] bg-amber-500 py-3 px-10 flex items-center">
+    <!-- amber block -->
+    <div class="container absolute top-[150px] bg-amber-500 py-5 px-10 flex items-center">
       <nav class="">
         <ul class="flex gap-5">
           <li class=""><a href="/" class="hover:text-white transition-all">Главная</a></li>
-          <li class=""><a href="/" class="hover:text-white transition-all">О нас</a></li>
-          <li class=""><a href="/" class="hover:text-white transition-all">Наши работы</a></li>
+          <li class=""><a href="#about" class="hover:text-white transition-all">О нас</a></li>
+          <li class=""><a href="#work" class="hover:text-white transition-all">Наши работы</a></li>
         </ul>
       </nav>
       <div class="ml-auto text-white">
-        <button class="bg-blue-950 px-10 py-3 hover:bg-white hover:text-blue-950 hover:scale-[102%] transition-all">Есть
-          вопрос?</button>
+        <a href="#footer" class="bg-blue-950 px-10 py-3 hover:bg-white hover:text-blue-950 hover:scale-[102%] transition-all">Есть
+          вопрос?</a>
       </div>
     </div>
   </header>
 
-  <main class="bg-zinc-200 h-screen">
+  <main class="bg-zinc-200">
     <!-- hero -->
     <div class="bg-[url(/img/hero.jpg)] h-screen bg-cover bg-fixed">
       <div class="container mx-auto pt-70 flex flex-col gap-5">
@@ -85,13 +103,13 @@ import 'swiper/swiper-bundle.css';
       </div>
     </div>
     <!-- about us -->
-    <section class="bg-white h-screen">
-      <div class="container mx-auto flex gap-10 pt-30">
-        <div class="max-w-[50%]">
+    <section class="bg-white h-screen" id="about">
+      <div class="container mx-auto flex gap-10 pt-30 paralax">
+        <div class="max-w-[50%] ">
           <img src="/img/IMAGE.jpg" class="img-fluid rounded-top" alt="" />
         </div>
         <div class="max-w-[50%] text-left flex flex-col gap-5 px-3 py-5">
-          <div class="flex items-center gap-3 bg-zinc-100 px-5 py-1">
+          <div class="flex items-center gap-3 bg-zinc-100 px-5 py-1 ">
             <img src="/img/icongear.png" alt="icon">
             <p>Welcome to Don Stroy City</p>
           </div>
@@ -123,112 +141,119 @@ import 'swiper/swiper-bundle.css';
       </div>
     </section>
     <!-- what we ofer -->
-    <section class="relative bg-amber-500 h-screen pt-50">
-      <div class="container mx-auto">
-        <div class="flex flex-col gap-5 items-center">
-          <div class="bg-[rgba(255,255,255,0.7)] px-2 py-1 flex items-center gap-3">
-            <img src="/img/icongear.png" class="img-fluid rounded-top" alt="" />
-            <p>Что вы получаете</p>
-          </div>
-          <div class="flex flex-col items-center gap-5">
-            <h3 class="text-blue-950 text-5xl">Основные профессиональные услуги</h3>
-            <p class="text-blue-950 max-w-[1000px] text-center">У нас большой опыт в области косметических и глобальных
-              строительных работ,
-              и для нас не
-              существует слишком
-              маленьких работ. Наши клиенты ценят наш профессионализм, трудовую этику и конкурентоспособные цены.</p>
-          </div>
-          <div class="flex gap-10 mt-5">
-            <div
-              class="flex items-center gap-3 outline-2 outline-blue-950 px-5 py-3 text-blue-950 hover:bg-white hover:outline-none hover:scale-[102%] transition-all">
-              <img src="/img/commercial.png" class="img-fluid rounded-top" alt="" />
-              <p>Коммерческий</p>
-            </div>
-            <div
-              class="flex items-center gap-3 outline-2 outline-blue-950 px-5 py-3 text-blue-950 hover:bg-white hover:outline-none hover:scale-[102%] transition-all">
-              <img src="/img/residential.png" class="img-fluid rounded-top" alt="" />
-              <p>Жилой</p>
-            </div>
-            <div
-              class="flex items-center gap-3 outline-2 outline-blue-950 px-5 py-3 text-blue-950 hover:bg-white hover:outline-none hover:scale-[102%] transition-all">
-              <img src="/img/Industrial.png" class="img-fluid rounded-top" alt="" />
-              <p>Промышленный</p>
-            </div>
-          </div>
-          <div class="bg-white absolute p-5 top-140 shadow-2xl">
-            <div class="flex items-center">
-              <div class="max-w-[40%]">
-                <div class="bg-zinc-100 px-2 py-1 flex items-center gap-3 max-w-45">
-                  <img src="/img/commercialy.png" alt="commercialy">
-                  <p>Коммерческий</p>
-                </div>
-                <div class="flex flex-col gap-5">
-                  <h3 class="text-3xl text-blue-950">Коммерческий</h3>
-                  <p>Компания Don Stroy City предлагает полный спектр строительных услуг в
-                    соответствии с вашими потребностями.</p>
-                </div>
-              </div>
-              <div class=" w-[416px] ml-auto">
-                <img src="/img/electrical.png" alt="electrical">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- our services -->
-    <section class="bg-zinc-300 pt-80">
+    <section class="bg-amber-500 h-screen pt-30 pb-50" id="work">
       <div class="container mx-auto flex flex-col items-center gap-10">
         <div class=" flex flex-col gap-5 items-center">
           <h3 class="text-5xl text-blue-950">Другие услуги</h3>
           <p class="text-zinc-700">Мы предлагаем полный спектр строительных услуг для жилых и коммерческих помещений по
             разумной цене.</p>
         </div>
-        <div class="grid grid-cols-3 gap-5">
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
+        <!-- blue card -->
+           <div class="grid grid-cols-3 gap-5 ">
+             <div class="bg-blue-950 p-5 shadow-xl flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/conditioner.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
+               <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
+                 начиная с тепловизионного
+                 сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
+                 <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+             <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/elec.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Электрический монтаж</h4>
+               <p class="text-sm text-zinc-300 ">Современные электроустановки, которые обеспечивают все необходимые электрические решения для вашего бизнеса, дома или промышленного помещения.</p>
+               <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+             <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/general.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Генеральный строитель</h4>
+               <p class="text-sm text-zinc-300 ">Мы проводим безупречную оценку безопасности как коммерческих, так и жилых объектов. Наши опытные и знающие сотрудники.</p>
+               <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+             <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/security.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Система безопасности</h4>
+               <p class="text-sm text-zinc-300 ">Используемый для измерения расхода, уровня температуры и давления в обрабатывающей промышленности комплекс технологий обеспечивает производительность..</p>
+               <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+             <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/service.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Сервис и обслуживание</h4>
+               <p class="text-sm text-zinc-300 ">Компания DNC может обслуживать всю вашу электрическую инфраструктуру, начиная с тепловизионного сканирования ваших распределительных щитов..</p>
+               <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+             <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px] parallax-card">
+               <img src="/img/house.png" alt="conditioner">
+               <h4 class="text-xl text-amber-500">Расширения дома</h4>
+               <p class="text-sm text-zinc-300 ">Традиционно электроэнергия подается через столбы воздушной линии электропередачи, к которым кабель подключается к вашему зданию.</p>
+               <a href="mailto:tamozhnikova.anna@yandex.ru" class="text-zinc-300 text-sm italic hover:text-white mt-auto">Спросить</a>
+             </div>
+           </div>
+         </div>
+    </section>
+  </main>
+  <footer class="bg-blue-950" id="footer">
+    <div class="container mx-auto pt-30 pb-10">
+      <!-- frtPt -->
+      <div class="flex items center">
+        <div class="flex items-center">
+          <a href="/" class="text-white font-bold hover:text-amber-500 text-5xl">DNS</a>
+        </div>
+        <div class="flex items center ml-auto gap-7">
+          <div class="flex gap-3 items-center hover:scale-[102%] transition-all">
+            <div
+              class="bg-amber-500 text-blue-950 text-4xl rounded-full w-[70px] h-[70px] flex items-center justify-around hover:bg-white hover:text-amber-500 transition-colors">
+              <a href="/" class="far fa-envelope"></a>
+            </div>
+            <div class="flex flex-col text-zinc-200">
+              <p>Напиши нам</p>
+              <a href="">Info@bluecollar.com</a>
+            </div>
           </div>
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
+          <div class="flex gap-3 items-center hover:scale-[102%] transition-all">
+            <div
+              class="bg-amber-500 text-blue-950 text-4xl rounded-full w-[70px] h-[70px] flex items-center justify-around hover:bg-white hover:text-amber-500 transition-colors">
+              <a href="/" class="fa fa-phone"></a>
+            </div>
+            <div class="flex flex-col text-zinc-200">
+              <p>Позвони нам</p>
+              <a href="">+7949 000 00</a>
+            </div>
           </div>
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
-          </div>
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
-          </div>
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
-          </div>
-          <div class="bg-blue-950 p-5 shadow-md flex flex-col items-start gap-3 w-[300px]">
-            <img src="/img/conditioner.png" alt="conditioner">
-            <h4 class="text-xl text-amber-500">Установка кондиционеров</h4>
-            <p class="text-sm text-zinc-300 ">Услуги позволяют обслуживать всю вашу электрическую инфраструктуру,
-              начиная с тепловизионного
-              сканирования системы кондиционирования воздуха и заканчивая распределительными щитами.</p>
+          <div class="flex gap-3 items-center hover:scale-[102%] transition-all">
+            <div
+              class="bg-amber-500 text-blue-950 text-4xl rounded-full w-[70px] h-[70px] flex items-center justify-around hover:bg-white hover:text-amber-500 transition-colors">
+              <a href="/https://yandex.ru/maps/-/CHCA4-Pl" class="fa fa-map-marker-alt"></a>
+            </div>
+            <div class="flex flex-col text-zinc-200">
+              <p>Локация</p>
+              <a href="https://yandex.ru/maps/-/CHCA4-Pl">г. Донецк, Донецкая обл</a>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="container mx-auto pt-10 pb-10">
+        <div class="w-[100%] h-[1px] bg-zinc-500"></div>
+      </div>
+      <div class="flex items-center">
+        <div class="max-w-[500px] text-xl text-white flex flex-col gap-15">
+          <p>Мы здесь, чтобы удовлетворить ваши потребности в основных услугах для здания вашей мечты, будь то коммерческое, жилое или промышленное здание.</p>
+          <div class="flex items-center gap-5 text-white">
+            <a href="" class="bg-[rgb(44,50,101)] rounded-full w-20 h-20 flex items-center justify-around text-3xl hover:bg-white hover:text-[rgb(44,50,101)] hover:scale-[102%] transition-all"><i class="fab fa-vk"></i></a>
+            <a href="" class="bg-[rgb(44,50,101)] rounded-full w-20 h-20 flex items-center justify-around text-3xl hover:bg-white hover:text-[rgb(44,50,101)] hover:scale-[102%] transition-all"><i class="fab fa-facebook"></i></a>
+            <a href="" class="bg-[rgb(44,50,101)] rounded-full w-20 h-20 flex items-center justify-around text-3xl hover:bg-white hover:text-[rgb(44,50,101)] hover:scale-[102%] transition-all"><i class="fab fa-instagram"></i></a>
+            <a href="" class="bg-[rgb(44,50,101)] rounded-full w-20 h-20 flex items-center justify-around text-3xl hover:bg-white hover:text-[rgb(44,50,101)] hover:scale-[102%] transition-all"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="max-w-[70%] max-h-[50%] ml-auto">
+            <iframe src="https://yandex.ru/map-widget/v1/?from=tableau_yabro&ll=37.802850%2C48.015877&mode=poi&poi%5Bpoint%5D=37.802773%2C48.016011&poi%5Buri%5D=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNDQ0NTM0NTUwEh7Qo9C60YDQsNGX0L3QsCwg0JTQvtC90LXRhtGM0LoiCg0eNhdCFUQQQEI%2C&z=12"  allowfullscreen="true" class="w-[800px] h-[500px]">
+            </iframe>
+        </div>
+      </div>
+      <div class="container mx-auto pt-15 pb-3">
+        <div class="w-[100%] h-[1px] bg-zinc-500"></div>
+      </div>
+    </div>
+  </footer>
 </template>
